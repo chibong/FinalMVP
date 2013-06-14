@@ -1,0 +1,21 @@
+<h1>New Feedback</h1>
+
+
+<%= form_tag(feedbacks_url, method: 'post') do %>
+
+
+  <div>
+    <%= label_tag :user_id %><br />
+    <%= number_field_tag :user_id %>
+  </div>
+
+  <div>
+    <%= label_tag :comment %><br />
+    <%= text_area_tag :comment %>
+  </div>
+
+
+  <div>
+    <%= submit_tag "Create Feedback" %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<h1>Add A New Question</h1>
+<br>
+<br>
+
+<%= form_tag(questions_url, method: 'post') do %>
+
+  <div>
+    <%= label_tag "Add a question about that you want people to answer on a scale of 1-5" %><br />
+    <%= text_field_tag :summary, "", size: 80 %>
+  </div>
+
+  <div>
+    <%= submit_tag "Create A New Question" %>
+  </div>
+<% end %>

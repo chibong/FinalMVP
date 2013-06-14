@@ -1,0 +1,86 @@
+
+
+  <% if @user.id==@session_id %>
+    <h1>Your Feedback Questions</h1>
+    <table class="table table-hover table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Average Rating</th>
+          <th></th>
+          <tbody>
+          <% @user.questions.each do |question| %>
+          <tr>
+          <td><%= question.summary %></td>
+          <td><%= number_with_precision(question.answers.average(:number),:precision => 2) %></td>
+          <td><%= link_to 'Show', question_url(@user, question)%></td>
+          <td><%= link_to 'Edit ', edit_question_url(@user, question) %></td>
+          <td><%= link_to 'Delete', question_url(@user, question), method: 'delete', data: { confirm: "Do you really want to delete this question?" } %></td>
+          <% end %>
+          </tbody>
+        </tr>
+       </thead>
+    </table>
+    <br>
+    <br>
+    <table class="table table-hover table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>General comments and feedback</th>
+          <tbody>
+          <% if @user.feedbacks.present? %>
+          <% @user.feedbacks.each do |feedback| %>
+          <tr>
+          <td><%= feedback.comment %></td>
+          <td><%= link_to 'Show', feedback_url(@user, feedback)%></td>
+          <td><%= link_to 'Delete', feedback_url(@user, feedback), method: 'delete', data: { confirm: "Do you really want to delete this feedback?" } %></td>
+          <% end %>
+          <% else %>
+          <tr>
+            <td>You don't have any comments now...</td>
+          <%end %>
+
+          </tbody>
+        </tr>
+       </thead>
+    </table>
+    <p><span class="btn-label"><%= link_to 'Add A New Question', new_question_url , class: "btn btn-info" %></p>
+  <% else %>
+    <h1><%= @user.name %>'s Feedback Questions</h1>
+    <table class="table table-hover table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th></th>
+          <tbody>
+          <% @user.questions.each do |question| %>
+          <tr>
+          <td><%= question.summary %></td>
+          <td>
+              <%= form_tag("/users/#{@user.id}/questions/#{question.id}/answers", method: 'post') do %>
+              <%= select_tag :number, options_for_select(1..5) %>
+              <%= hidden_field_tag :question_id, question.id %> <!-- give the server hidden values  -->
+              <%= submit_tag %>
+            <% end %>
+          </td>
+          <% end %>
+      </tbody>
+        </tr>
+       </thead>
+    </table>
+    <br>
+<%= form_tag("/users/#{@user.id}/feedbacks/#{@feedback.id}", method: 'post') do %>
+  <div>
+    <%= label_tag "Please provide any additional comments or suggestions to improve" %><br />
+    <%= text_area_tag :comment %>
+  </div>
+
+  <div>
+    <%= submit_tag "Give Feedback" %>
+  </div>
+<% end %>
+
+<% end %>
+
+
+

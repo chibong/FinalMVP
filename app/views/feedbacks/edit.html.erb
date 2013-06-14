@@ -1,0 +1,21 @@
+<h1>Editing Feedback #<%= @feedback.id %></h1>
+
+
+<%= form_tag(feedback_url(@feedback), method: 'put') do %>
+
+  <div>
+    <%= label_tag :user_id %><br />
+    <%= number_field_tag :user_id, @feedback.user_id %>
+  </div>
+
+  <div>
+    <%= label_tag :comment %><br />
+    <%= text_area_tag :comment, @feedback.comment %>
+  </div>
+
+  
+  <div>
+    <%= submit_tag "Update Feedback" %>
+  </div>
+
+<% end %>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<%= stylesheet_link_tag "bootstrap.min.css"%>
+<html>
+<head>
+  <title>Feedback App</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript">
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+</head>
+<body>
+
+   <nav>
+      <% if session["user_id"].present? %>
+        Hello, <%= User.find_by_id(session["user_id"]).name %>! |
+      <%= link_to "Manage Feedback", questions_url( User.find_by_id(session["user_id"])) %> |
+      <%= link_to "Give Feedback", '/users' %> |
+      <%= link_to "Sign Out", "/logout" %> |
+      <%= link_to "Home", '/' %> |
+
+      <% else %>
+        <%= link_to "Give Feedback", 'href="/users"' %> |
+        <%= link_to "Sign Up", '/users/new' %> |
+        <%= link_to "Login", '/login' %>
+      <% end %>
+</nav>
+ <!--  <div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="/">Feed4ward</a>
+      <div class="navbar-content">
+
+        <ul class="nav ">
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/login">Login</a>
+          </li>
+          <li>
+            <a href="/users/new">New User</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+  </header>
+
+<div class="notice"><%= notice %></div>
+ <%= yield %>
+</body>
+</html>
+
